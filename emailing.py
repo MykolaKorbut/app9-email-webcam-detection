@@ -1,6 +1,7 @@
+import io
 import smtplib
-import imghdr
 from email.message import EmailMessage
+from PIL import Image
 
 PASSWORD = 'juff wljr qdeq anbc'
 SENDER = 'nikolay.korbut@gmail.com'
@@ -14,8 +15,14 @@ def send_email(image_path):
 
     with open(image_path, 'rb') as file:
         content = file.read()
-    email_message.add_attachment(content, maintype="image",
-                                 subtype=imghdr.what(None, content))
+
+    try:
+        with Image.open(io.BytesIO(content)) as img:
+            subtype = img.format.lower()
+    except IOError:
+        subtype = None
+
+    email_message.add_attachment(content, maintype="image", subtype=subtype)
 
     gmail = smtplib.SMTP("smtp.gmail.com", 587)
     gmail.ehlo()
@@ -26,5 +33,5 @@ def send_email(image_path):
 
 
 if __name__ == '__main__':
-    send_email(image_path="images/20.png")
+    send_email(image_path="images/5.png")
 
