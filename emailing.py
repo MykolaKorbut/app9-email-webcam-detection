@@ -3,7 +3,7 @@ import smtplib
 from email.message import EmailMessage
 from PIL import Image
 
-PASSWORD = 'juff wljr qdeq anbc'
+PASSWORD = ''
 SENDER = 'nikolay.korbut@gmail.com'
 RECEIVER = 'nikolay.korbut@gmail.com'
 
